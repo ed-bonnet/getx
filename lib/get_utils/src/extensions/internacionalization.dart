@@ -8,18 +8,13 @@ extension Trans on String {
 
     // Checks whether the language code and country code are present, and
     // whether the key is also present.
-    if (Get.translations.containsKey(
-            "${Get.locale!.languageCode}_${Get.locale!.countryCode}") &&
-        Get.translations[
-                "${Get.locale!.languageCode}_${Get.locale!.countryCode}"]!
-            .containsKey(this)) {
-      return Get.translations[
-          "${Get.locale!.languageCode}_${Get.locale!.countryCode}"]![this]!;
+    if (Get.translations.containsKey("${Get.locale!.languageCode}_${Get.locale!.countryCode}") &&
+        Get.translations["${Get.locale!.languageCode}_${Get.locale!.countryCode}"]!.containsKey(this)) {
+      return Get.translations["${Get.locale!.languageCode}_${Get.locale!.countryCode}"]![this]!;
 
       // Checks if there is a callback language in the absence of the specific
       // country, and if it contains that key.
-    } else if (Get.translations.containsKey(Get.locale!.languageCode) &&
-        Get.translations[Get.locale!.languageCode]!.containsKey(this)) {
+    } else if (Get.translations.containsKey(Get.locale!.languageCode) && Get.translations[Get.locale!.languageCode]!.containsKey(this)) {
       return Get.translations[Get.locale!.languageCode]![this]!;
       // If there is no corresponding language or corresponding key, return
       // the key.
@@ -27,12 +22,10 @@ extension Trans on String {
       final fallback = Get.fallbackLocale!;
       final key = "${fallback.languageCode}_${fallback.countryCode}";
 
-      if (Get.translations.containsKey(key) &&
-          Get.translations[key]!.containsKey(this)) {
+      if (Get.translations.containsKey(key) && Get.translations[key]!.containsKey(this)) {
         return Get.translations[key]![this]!;
       }
-      if (Get.translations.containsKey(fallback.languageCode) &&
-          Get.translations[fallback.languageCode]!.containsKey(this)) {
+      if (Get.translations.containsKey(fallback.languageCode) && Get.translations[fallback.languageCode]!.containsKey(this)) {
         return Get.translations[fallback.languageCode]![this]!;
       }
       return this;
@@ -52,7 +45,7 @@ extension Trans on String {
   }
 
   String trPlural([String? pluralKey, int? i, List<String> args = const []]) {
-    return i == 1 ? trArgs(args) : pluralKey!.trArgs(args);
+    return i > 1 ? pluralKey!.trArgs(args) : trArgs(args);
   }
 
   String? trParams([Map<String, String> params = const {}]) {
@@ -65,9 +58,8 @@ extension Trans on String {
     return trans;
   }
 
-  String? trPluralParams(
-      [String? pluralKey, int? i, Map<String, String> params = const {}]) {
-    return i == 1 ? trParams(params) : pluralKey!.trParams(params);
+  String? trPluralParams([String? pluralKey, int? i, Map<String, String> params = const {}]) {
+    return i > 1 ? pluralKey!.trParams(params) : trParams(params);
   }
 }
 
